@@ -26,11 +26,20 @@
 
 # Style sheet
 H1="${BOLD}"
+BERR="${BOLD}${RED}"
+BWARN="${BOLD}${YELLOW}"
+BINFO="${BOLD}${WHITE}"
+ERR="${RED}"
+WARN="${YELLOW}"
+INFO="${WHITE}"
 
-header() {
-  printf "%s%s\n" "${1}" "${2}"  
+log_with_style() {
+  printf "%s%s%s\n" "${1}" "${2}" "${RESET}"  
 }
 
-h1() {
-  header "${H1}" "${1}"
-}
+alias log_berr='log_with_style ${BERR}'
+alias log_bwarn='log_with_style ${BWARN}'
+alias log_binfo='log_with_style ${BINFO}'
+alias log_err='log_with_style ${ERR}'
+alias log_warn='log_with_style ${WARN}'
+alias log_info='log_with_style ${INFO}'
