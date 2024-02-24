@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Formatting
 # shellcheck disable=SC2034
@@ -24,32 +24,79 @@
   WHITE="$(tput setaf 7)"
 }
 
-# Style sheet
-H1="${BOLD}"
-BERR="${BOLD}${RED}"
-BWARN="${BOLD}${YELLOW}"
-BNOTICE="${BOLD}${BLUE}"
-BINFO="${BOLD}${WHITE}"
-BDEBUG="${BOLD}${BLACK}"
+declare -r -A ERR=(
+  [prefix]="error: "
+  [suffix]=""
+  [format]="${RED}"
+)
 
-ERR="${RED}"
-WARN="${YELLOW}"
-NOTICE="${BLUE}"
-INFO="${WHITE}"
-DEBUG="${BLACK}"
+declare -r -A WARN=(
+  [prefix]="warning: "
+  [suffix]=""
+  [format]="${YELLOW}"
+)
 
-log_with_style() {
-  printf "%s%s%s\n" "${1}" "${2}" "${RESET}"  
+declare -r -A NOTICE=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${BLUE}"
+)
+
+declare -r -A INFO=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${WHITE}"
+)
+
+declare -r -A DEBUG=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${BLACK}"
+)
+
+declare -r -A BERR=(
+  [prefix]="error: "
+  [suffix]=""
+  [format]="${BOLD}${RED}"
+)
+
+declare -r -A BWARN=(
+  [prefix]="warning: "
+  [suffix]=""
+  [format]="${BOLD}${YELLOW}"
+)
+
+declare -r -A BNOTICE=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${BOLD}${BLUE}"
+)
+
+declare -r -A BINFO=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${BOLD}${WHITE}"
+)
+
+declare -r -A BDEBUG=(
+  [prefix]=""
+  [suffix]=""
+  [format]="${BOLD}${BLACK}"
+)
+
+_log() {
+  local -n style=$1
+  printf "%s%s%s%s%s\n" "${style[format]}" "${style[prefix]}" "${2}" "${style[suffix]}" "${RESET}"
 }
 
-alias log_berr='log_with_style ${BERR}'
-alias log_bwarn='log_with_style ${BWARN}'
-alias log_bnotice='log_with_style ${BNOTICE}'
-alias log_binfo='log_with_style ${BINFO}'
-alias log_bdebug='log_with_style ${BDEBUG}'
+alias log_berr='_log BERR'
+alias log_bwarn='_log BWARN'
+alias log_bnotice='_log BNOTICE'
+alias log_binfo='_log BINFO'
+alias log_bdebug='_log BDEBUG'
 
-alias log_err='log_with_style ${ERR}'
-alias log_warn='log_with_style ${WARN}'
-alias log_notice='log_with_style ${NOTICE}'
-alias log_info='log_with_style ${INFO}'
-alias log_debug='log_with_style ${DEBUG}'
+alias log_err='_log ERR'
+alias log_warn='_log WARN'
+alias log_notice='_log NOTICE'
+alias log_info='_log INFO'
+alias log_debug='_log DEBUG'
