@@ -2,4 +2,27 @@
 
 . "$(dirname "${0}")"/../logger.sh
 
-h1 "Hello World!"
+print() {
+  printf "%s%s%s\n" "${1}" "${2}" "${RESET}"
+}
+
+# Format test
+echo "Test: formatting"
+print "${BOLD}" "bold"
+print "${ULINE}" "underline"
+print "${BLINK}" "blinking"
+print "${DIM}" "dimmed"
+print "${ITALIC}" "italic"
+printf "\n"
+
+# Colors test
+echo "Test: colors"
+print "${BLACK}" "black"
+print "${RED}" "red"
+print "${GREEN}" "green"
+print "${YELLOW}" "yellow"
+print "${BLUE}" "blue"
+print "${MAGENTA}" "magenta"
+print "${CYAN}" "cyan"
+print "${WHITE}" "white"
+printf "\n"
