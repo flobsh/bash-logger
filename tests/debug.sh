@@ -7,7 +7,7 @@ print() {
 }
 
 # Format test
-echo "Test: formatting"
+echo "-- Test: formatting"
 print "${BOLD}" "bold"
 print "${ULINE}" "underline"
 print "${BLINK}" "blinking"
@@ -16,7 +16,7 @@ print "${ITALIC}" "italic"
 printf "\n"
 
 # Colors test
-echo "Test: colors"
+echo "-- Test: colors"
 print "${BLACK}" "black"
 print "${RED}" "red"
 print "${GREEN}" "green"
@@ -27,9 +27,16 @@ print "${CYAN}" "cyan"
 print "${WHITE}" "white"
 printf "\n"
 
-log_berr "Bold error"
-log_bwarn "Bold warning"
-log_binfo "Bold info"
+# Log functions tests
+echo "-- Test: log functions"
+log_berr "bold error"
+log_bwarn "bold warning"
+log_bnotice "bold notice"
+log_binfo "bold info"
+log_bdebug "bold debug"
+
 log_err "error"
 log_warn "warning"
+log_notice "notice"
 log_info "info"
+log_debug "debug"
