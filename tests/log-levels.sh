@@ -3,10 +3,10 @@
 . "$(dirname "${0}")"/../bash-logger.sh
 
 LOG_LEVEL_OUTPUTS="\
-ERR error
-WARN warning
-INFO info
-DEBUG debug"
+error: error
+warning: warning
+info: info
+debug: debug"
 
 assert_eq() {
   local got="${1}"
