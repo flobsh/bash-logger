@@ -84,19 +84,19 @@ declare -r -A BDEBUG=(
   [format]="${BOLD}${BLACK}"
 )
 
-_log() {
+_log_err() {
   local -n style=$1
-  printf "%s%s%s%s%s\n" "${style[format]}" "${style[prefix]}" "${2}" "${style[suffix]}" "${RESET}"
+  printf "%s%s%s%s%s\n" "${style[format]}" "${style[prefix]}" "${2}" "${style[suffix]}" "${RESET}" >&2
 }
 
-alias log_berr='_log BERR'
-alias log_bwarn='_log BWARN'
-alias log_bnotice='_log BNOTICE'
-alias log_binfo='_log BINFO'
-alias log_bdebug='_log BDEBUG'
+alias log_berr='_log_err BERR'
+alias log_bwarn='_log_err BWARN'
+alias log_bnotice='_log_err BNOTICE'
+alias log_binfo='_log_err BINFO'
+alias log_bdebug='_log_err BDEBUG'
 
-alias log_err='_log ERR'
-alias log_warn='_log WARN'
-alias log_notice='_log NOTICE'
-alias log_info='_log INFO'
-alias log_debug='_log DEBUG'
+alias log_err='_log_err ERR'
+alias log_warn='_log_err WARN'
+alias log_notice='_log_err NOTICE'
+alias log_info='_log_err INFO'
+alias log_debug='_log_err DEBUG'
