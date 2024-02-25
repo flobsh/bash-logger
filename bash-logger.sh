@@ -18,17 +18,17 @@ _log_with_level() {
 }
 
 log_debug() {
-  _log_with_level DEBUG
+  _log_with_level DEBUG "${1}"
 }
 
 log_info() {
-  _log_with_level INFO
+  _log_with_level INFO "${1}"
 }
 
 log_warn() {
-  _log_with_level WARN
+  _log_with_level WARN "${1}"
 }
 
 log_err() {
-  _log_with_level ERR
+  _log_with_level ERR "${1}"
 }
