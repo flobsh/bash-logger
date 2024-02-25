@@ -1,8 +1,10 @@
 #!/bin/bash
 
-. "$(dirname "${BASH_SOURCE[0]}")"/styles.sh
-
+# Global options
 LOG_LEVEL=${LOG_LEVEL:-INFO}
+LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-true}
+
+. "$(dirname "${BASH_SOURCE[0]}")"/styles.sh
 
 declare -r -A LOG_LEVELS=(
   [DEBUG]=0
