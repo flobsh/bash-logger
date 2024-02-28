@@ -37,7 +37,7 @@ LOG_LEVEL=DEBUG
 assert_eq "$(log_diagnostics 2>&1)" "${LOG_LEVEL_OUTPUTS}"
 LOG_LEVEL=INFO 
 assert_eq "$(log_diagnostics 2>&1)" "$(echo "${LOG_LEVEL_OUTPUTS}" | head -n 3)"
-LOG_LEVEL=WARN
+LOG_LEVEL=WARNING
 assert_eq "$(log_diagnostics 2>&1)" "$(echo "${LOG_LEVEL_OUTPUTS}" | head -n 2)"
-LOG_LEVEL=ERR 
+LOG_LEVEL=ERROR 
 assert_eq "$(log_diagnostics 2>&1)" "$(echo "${LOG_LEVEL_OUTPUTS}" | head -n 1)"
