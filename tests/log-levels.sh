@@ -2,17 +2,15 @@
 
 . "$(dirname "${0}")"/../bash-logger.sh
 
-if [[ -n "${LOG_SCRIPT_NAME}" ]] && [[ "${LOG_SCRIPT_NAME}" = true ]]; then
-  NAME="[$(basename "${0}")] "
-else
-  NAME=""
-fi
+# Set global options to run test:
+LOG_LEVEL=DEBUG
+LOG_SCRIPT_NAME=OFF
 
 LOG_LEVEL_OUTPUTS="\
-${NAME}error: error
-${NAME}warning: warning
-${NAME}info: info
-${NAME}debug: debug"
+error: error
+warning: warning
+info: info
+debug: debug"
 
 assert_eq() {
   local got="${1}"
