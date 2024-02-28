@@ -1,8 +1,16 @@
 #!/bin/bash
 
 # Global options
+# LOG_LEVEL sets the level of log the script will output.
+# The logger will display the messages for LOG_LEVEL and higher.
+# Values can be DEBUG, INFO, WARNING or ERROR (default INFO).
 LOG_LEVEL=${LOG_LEVEL:-INFO}
-LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-true}
+# LOG_SCRIPT_NAME enables display of the script issuing the log.
+# Values can be (default DEBUG):
+# - OFF: the logger will never display the script's name
+# - DEBUG, INFO, WARNING or ERROR: the logger will display the script's name only for this log level and higher
+# - ON: the logger will always display the script's name
+LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-DEBUG}
 
 . "$(dirname "${BASH_SOURCE[0]}")"/styles.sh
 
@@ -22,8 +30,9 @@ _log() {
   local -n style="${2}"
   local content="${3}"
 
-  if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
-    printf "%s%s\n" "${style[prefix]}" "${2}"
+  local script_name=""
+  if [[ "${log_script_name}" = true ]]; then
+    script_name="[$(basename "${BASH_SOURCE[-1]}")] "
   fi
 
   printf "%s%s%s\n" "${script_name}" "${style[prefix]}" "${content}"
@@ -35,7 +44,15 @@ _log() {
 _log_diagnostic() {
   local level="${LOG_LEVELS[${1}]}"
   if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
-    _log "${1}" "${2}" >&2
+
+    local log_script_name
+    if [[ "${LOG_SCRIPT_NAME}" == "OFF" ]]; then
+      log_script_name=false
+    elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -ge "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
+      log_script_name=true
+    fi
+
+    _log "${log_script_name}" "${1}" "${2}" >&2
   fi
 }
 
