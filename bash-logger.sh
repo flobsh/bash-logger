@@ -11,6 +11,9 @@ LOG_LEVEL=${LOG_LEVEL:-INFO}
 # - DEBUG, INFO, WARNING or ERROR: the logger will display the script's name only for this log level and higher
 # - ON: the logger will always display the script's name
 LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-DEBUG}
+# LOG_FORMATTING enables output colors and text formatting
+# Values can be ON or OFF (default ON)
+LOG_FORMATTING=${LOG_FORMATTING:-ON}
 
 . "$(dirname "${BASH_SOURCE[0]}")"/styles.sh
 
@@ -30,12 +33,21 @@ _log() {
   local -n style="${2}"
   local content="${3}"
 
+  # Check if script name should be displayed.
   local script_name=""
   if [[ "${log_script_name}" = true ]]; then
     script_name="[$(basename "${BASH_SOURCE[-1]}")] "
   fi
 
-  printf "%s%s%s\n" "${script_name}" "${style[prefix]}" "${content}"
+  # Check if formatting should be enabled
+  local formatting=""
+  local format_reset=""
+  if [[ "${LOG_FORMATTING}" == ON ]]; then
+    formatting="${style[format]}"
+    format_reset="${RESET}"
+  fi
+
+  printf "%s%s%s%s%s\n" "${formatting}" "${script_name}" "${style[prefix]}" "${content}" "${format_reset}"
 }
 
 # Log a diagnostic message on stderr.

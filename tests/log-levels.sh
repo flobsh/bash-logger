@@ -5,6 +5,7 @@
 # Set global options to run test:
 LOG_LEVEL=DEBUG
 LOG_SCRIPT_NAME=OFF
+LOG_FORMATTING=OFF
 
 LOG_LEVEL_OUTPUTS="\
 error: error
