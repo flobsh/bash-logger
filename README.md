@@ -11,8 +11,8 @@ Here is a list of features I plan to implement:
 
 - [x] Diagnostics functions (errors, warnings, information and debug levels) that log on stderr
 - [x] Conditionnaly display log levels based on an environment variable
-- [X] Optional script name display
+- [x] Optional script name display
 - [ ] Optional script line display
 - [ ] Simple log functions that output on stdout
-- [ ] Style sheets with customizable formatting and colors
+- [x] Style sheets with customizable formatting and colors
 - [ ] Execute function that can log the output of a command (behavior to be defined)
