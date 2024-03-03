@@ -13,6 +13,6 @@ Here is a list of features I plan to implement:
 - [x] Conditionnaly display log levels based on an environment variable
 - [x] Optional script name display
 - [ ] Optional script line display
-- [ ] Simple log functions that output on stdout
+- [x] Simple log functions that output on stdout
 - [x] Style sheets with customizable formatting and colors
 - [ ] Execute function that can log the output of a command (behavior to be defined)

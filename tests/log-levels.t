@@ -6,6 +6,8 @@ test_description='Test that log levels are correclty output'
 . "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
 
 EXPECTED_OUTPUT="\
+section
+normal
 error: error
 warning: warning
 info: info
@@ -16,7 +18,9 @@ LOG_SCRIPT_NAME=OFF
 LOG_FORMATTING=OFF
 
 # shellcheck disable=SC2317
-log_diagnostics() {
+test_log() {
+  log_section "section"
+  log "normal"
   log_err "error"
   log_warn "warning"
   log_info "info"
@@ -31,19 +35,19 @@ test_log_level() {
   case "${log_level}" in
     DEBUG)
       LOG_LEVEL=DEBUG
-      test "$(log_diagnostics 2>&1)" == "${EXPECTED_OUTPUT}"
+      test "$(test_log 2>&1)" == "${EXPECTED_OUTPUT}"
       ;;
     INFO)
       LOG_LEVEL=INFO
-      test "$(log_diagnostics 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 3)"
+      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 5)"
       ;;
     WARNING)
       LOG_LEVEL=WARNING
-      test "$(log_diagnostics 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 2)"
+      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 4)"
       ;;
     ERROR)
       LOG_LEVEL=ERROR
-      test "$(log_diagnostics 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 1)"
+      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 3)"
       ;;
     *)
       printf "unknown log level" >&2

@@ -10,7 +10,9 @@ LOG_LEVEL=DEBUG
 LOG_FORMATTING=OFF
 TEST_SCRIPT_NAME="$(basename "${0}")"
 
-log_diagnostics() {
+test_log() {
+  log_section "section"
+  log "normal"
   log_err "error"
   log_warn "warning"
   log_info "info"
@@ -22,7 +24,9 @@ test_log_script_name() {
   case "${log_script_name}" in
     OFF)
       LOG_SCRIPT_NAME=OFF
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+section
+normal
 error: error
 warning: warning
 info: info
@@ -30,7 +34,9 @@ debug: debug"
       ;;
     DEBUG)
       LOG_SCRIPT_NAME=DEBUG
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+section
+normal
 [${TEST_SCRIPT_NAME}] error: error
 [${TEST_SCRIPT_NAME}] warning: warning
 [${TEST_SCRIPT_NAME}] info: info
@@ -38,7 +44,9 @@ debug: debug"
       ;;
     INFO)
       LOG_SCRIPT_NAME=INFO
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+section
+normal
 [${TEST_SCRIPT_NAME}] error: error
 [${TEST_SCRIPT_NAME}] warning: warning
 [${TEST_SCRIPT_NAME}] info: info
@@ -46,7 +54,9 @@ debug: debug"
       ;;
     WARNING)
       LOG_SCRIPT_NAME=WARNING
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+section
+normal
 [${TEST_SCRIPT_NAME}] error: error
 [${TEST_SCRIPT_NAME}] warning: warning
 info: info
@@ -54,7 +64,9 @@ debug: debug"
       ;;
     ERROR)
       LOG_SCRIPT_NAME=ERROR
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+section
+normal
 [${TEST_SCRIPT_NAME}] error: error
 warning: warning
 info: info
@@ -62,7 +74,9 @@ debug: debug"
       ;;
     ON)
       LOG_SCRIPT_NAME=ON
-      test "$(log_diagnostics 2>&1)" ==  "\
+      test "$(test_log 2>&1)" ==  "\
+[${TEST_SCRIPT_NAME}] section
+[${TEST_SCRIPT_NAME}] normal
 [${TEST_SCRIPT_NAME}] error: error
 [${TEST_SCRIPT_NAME}] warning: warning
 [${TEST_SCRIPT_NAME}] info: info

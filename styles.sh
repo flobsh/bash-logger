@@ -21,3 +21,13 @@ declare -r -x -A DEBUG=(
   [prefix]="debug: "
   [format]="${BLACK}"
 )
+
+declare -r -x -A NORMAL=(
+  [prefix]=""
+  [format]="${WHITE}"
+)
+
+declare -r -x -A SECTION=(
+  [prefix]=""
+  [format]="${BLUE}"
+)

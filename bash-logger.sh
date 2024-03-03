@@ -68,6 +68,24 @@ _log_diagnostic() {
   fi
 }
 
+_log_out() {
+  local style="${1}"
+  local content="${2}"
+
+  local log_script_name
+  log_script_name="$([[ "${LOG_SCRIPT_NAME}" == "ON" ]] && echo true || echo false)"
+
+  _log "${log_script_name}" "${style}" "${content}"
+}
+
+log() {
+  _log_out NORMAL "${1}"
+}
+
+log_section() {
+  _log_out SECTION "${1}"
+}
+
 log_debug() {
   _log_diagnostic DEBUG "${1}"
 }
