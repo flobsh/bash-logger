@@ -15,7 +15,7 @@ LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-DEBUG}
 # Values can be ON or OFF (default ON)
 LOG_FORMATTING=${LOG_FORMATTING:-ON}
 
-. "$(dirname "${BASH_SOURCE[0]}")"/styles.sh
+. "$(dirname "${BASH_SOURCE[0]}")"/styles.conf
 
 declare -r -A LOG_LEVELS=(
   [DEBUG]=0
