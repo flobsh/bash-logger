@@ -33,13 +33,13 @@ _get_caller_script_name() {
 # $2: style (on of the styles available in styles.sh)
 # $3: content (string)
 _log() {
-  local log_script_name="${1}"
+  local should_log_script_name="${1}"
   local -n style="${2}"
   local content="${3}"
 
   # Check if script name should be displayed.
   local script_name=""
-  if [[ "${log_script_name}" = true ]]; then
+  if [[ "${should_log_script_name}" = true ]]; then
     script_name="[$(_get_caller_script_name)] "
   fi
 
@@ -61,14 +61,14 @@ _log_diagnostic() {
   local level="${LOG_LEVELS[${1}]}"
   if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
 
-    local log_script_name
+    local should_log_script_name
     if [[ "${LOG_SCRIPT_NAME}" == "OFF" ]]; then
-      log_script_name=false
+      should_log_script_name=false
     elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -ge "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
-      log_script_name=true
+      should_log_script_name=true
     fi
 
-    _log "${log_script_name}" "${1}" "${2}" >&2
+    _log "${should_log_script_name}" "${1}" "${2}" >&2
   fi
 }
 
@@ -76,10 +76,10 @@ _log_out() {
   local style="${1}"
   local content="${2}"
 
-  local log_script_name
-  log_script_name="$([[ "${LOG_SCRIPT_NAME}" == "ON" ]] && echo true || echo false)"
+  local should_log_script_name
+  should_log_script_name="$([[ "${LOG_SCRIPT_NAME}" == "ON" ]] && echo true || echo false)"
 
-  _log "${log_script_name}" "${style}" "${content}"
+  _log "${should_log_script_name}" "${style}" "${content}"
 }
 
 log() {
