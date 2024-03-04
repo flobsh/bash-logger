@@ -24,6 +24,10 @@ declare -r -A LOG_LEVELS=(
   [ERROR]=3
 )
 
+_get_caller_script_name() {
+  basename "${BASH_SOURCE[-1]}"
+}
+
 # Main log function.
 # $1: should log script name (boolean)
 # $2: style (on of the styles available in styles.sh)
@@ -36,7 +40,7 @@ _log() {
   # Check if script name should be displayed.
   local script_name=""
   if [[ "${log_script_name}" = true ]]; then
-    script_name="[$(basename "${BASH_SOURCE[-1]}")] "
+    script_name="[$(_get_caller_script_name)] "
   fi
 
   # Check if formatting should be enabled
