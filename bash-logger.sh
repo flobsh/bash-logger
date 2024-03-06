@@ -10,7 +10,7 @@ LOG_LEVEL=${LOG_LEVEL:-INFO}
 # - OFF: the logger will never display the script's name
 # - DEBUG, INFO, WARNING or ERROR: the logger will display the script's name only for this log level and higher
 # - ON: the logger will always display the script's name
-LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-DEBUG}
+LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-false}
 # LOG_FORMATTING enables output colors and text formatting
 # Values can be ON or OFF (default ON)
 LOG_FORMATTING=${LOG_FORMATTING:-ON}
@@ -30,14 +30,12 @@ _get_caller_script_name() {
 }
 
 # Main log function.
-# $1: should log script name (boolean)
-# $2: style (on of the styles available in styles.sh)
-# $3: content (string)
+# $1: style (defined in styles.conf)
+# $2: content (string)
 _log() {
   # Arguments
-  local should_log_script_name="${1}"
-  local -n style="${2}"
-  local content="${3}"
+  local -n style="${1}"
+  local content="${2}"
 
   # Local variables
   local script_name=""
@@ -45,7 +43,7 @@ _log() {
   local format_reset=""
 
   # Check if script name should be displayed.
-  if [[ "${should_log_script_name}" = true ]]; then
+  if [[ "${LOG_SCRIPT_NAME}" = true ]] && [[ "${style[script_name]}" = true ]]; then
     script_name="[$(_get_caller_script_name)] "
   fi
 
@@ -66,18 +64,8 @@ _log_diagnostic() {
   local level="${LOG_LEVELS[${1}]}"
   local content="${2}"
 
-  # Local variables
-  local should_log_script_name
-
   if [[ "${level}" -le "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
-
-    if [[ "${LOG_SCRIPT_NAME}" == "OFF" ]]; then
-      should_log_script_name=false
-    elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -le "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
-      should_log_script_name=true
-    fi
-
-    _log "${should_log_script_name}" "${1}" "${2}" >&2
+    _log "${1}" "${2}" >&2
   fi
 }
 
@@ -86,12 +74,7 @@ _log_out() {
   local style="${1}"
   local content="${2}"
 
-  # Local variables
-  local should_log_script_name
-
-  should_log_script_name="$([[ "${LOG_SCRIPT_NAME}" == "ON" ]] && echo true || echo false)"
-
-  _log "${should_log_script_name}" "${style}" "${content}"
+  _log "${style}" "${content}"
 }
 
 log() {

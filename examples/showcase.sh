@@ -22,5 +22,5 @@ log "${MAGENTA}Customize ${CYAN}colors ${GREEN}within ${YELLOW}log ${BLUE}functi
 log "${BOLD}Or${RESET} ${ITALIC}even${RESET} ${DIM}use${RESET} ${BLINK}formatting${RESET} ${ULINE}options.${RESET}"
 echo -e
 
-log "Try running this script with LOG_LEVEL=DEBUG, LOG_FORMATTING=OFF or LOG_SCRIPT_NAME=ERROR"
+log "Try running this script with LOG_LEVEL=DEBUG, LOG_FORMATTING=OFF or LOG_SCRIPT_NAME=true"
 
