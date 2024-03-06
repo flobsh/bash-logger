@@ -18,6 +18,7 @@ log_err "[[ $((1 + 1)) -eq 0 ]]"
 log_info "And then back to $(basename "${0}") script"
 echo -e
 
+log_section "Formatting"
 log "${MAGENTA}Customize ${CYAN}colors ${GREEN}within ${YELLOW}log ${BLUE}functions.${RESET}"
 log "${BOLD}Or${RESET} ${ITALIC}even${RESET} ${DIM}use${RESET} ${BLINK}formatting${RESET} ${ULINE}options.${RESET}"
 echo -e
