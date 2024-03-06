@@ -13,8 +13,12 @@ LOG_LEVEL=${LOG_LEVEL:-INFO}
 LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-false}
 # LOG_FORMATTING enables output colors and text formatting
 # Values can be ON or OFF (default ON)
-LOG_FORMATTING=${LOG_FORMATTING:-ON}
+LOG_FORMATTING=${LOG_FORMATTING:-true}
 
+# Source configuration files
+if [[ "${LOG_FORMATTING}" = true ]]; then
+  . "$(dirname "${BASH_SOURCE[0]}")"/formatting.conf
+fi
 . "$(dirname "${BASH_SOURCE[0]}")"/styles.conf
 
 declare -r -A LOG_LEVELS=(
@@ -51,13 +55,7 @@ _log() {
     script_name="[$(_get_caller_script_name)] "
   fi
 
-  # Check if formatting should be enabled
-  if [[ "${LOG_FORMATTING}" == ON ]]; then
-    formatting="${style[format]}"
-    format_reset="${RESET}"
-  fi
-
-  printf "%s%s%s%s%s\n" "${formatting}" "${script_name}" "${style[prefix]}" "${content}" "${format_reset}"
+  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}"
 }
 
 log() {

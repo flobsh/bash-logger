@@ -2,13 +2,13 @@
 
 test_description='Test that script name is correctly reported'
 
-. "$(dirname "${BASH_SOURCE[0]}")"/../bash-logger.sh
-. "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
-
 # Set global options to run test:
 LOG_LEVEL=DEBUG
-LOG_FORMATTING=OFF
+LOG_FORMATTING=false
 TEST_SCRIPT_NAME="$(basename "${0}")"
+
+. "$(dirname "${BASH_SOURCE[0]}")"/../bash-logger.sh
+. "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
 
 test_log() {
   log_section "section"

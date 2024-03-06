@@ -2,6 +2,10 @@
 
 test_description='Test that log levels are correclty output'
 
+# Set global options to run test:
+LOG_SCRIPT_NAME=false
+LOG_FORMATTING=false
+
 . "$(dirname "${BASH_SOURCE[0]}")"/../bash-logger.sh
 . "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
 
@@ -12,10 +16,6 @@ error: error
 warning: warning
 info: info
 debug: debug"
-
-# Set global options to run test:
-LOG_SCRIPT_NAME=OFF
-LOG_FORMATTING=OFF
 
 # shellcheck disable=SC2317
 test_log() {
