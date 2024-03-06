@@ -18,10 +18,11 @@ LOG_FORMATTING=${LOG_FORMATTING:-ON}
 . "$(dirname "${BASH_SOURCE[0]}")"/styles.conf
 
 declare -r -A LOG_LEVELS=(
-  [DEBUG]=0
-  [INFO]=1
+  [ANY]=0
+  [ERROR]=1
   [WARNING]=2
-  [ERROR]=3
+  [INFO]=3
+  [DEBUG]=4
 )
 
 _get_caller_script_name() {
@@ -68,11 +69,11 @@ _log_diagnostic() {
   # Local variables
   local should_log_script_name
 
-  if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
+  if [[ "${level}" -le "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
 
     if [[ "${LOG_SCRIPT_NAME}" == "OFF" ]]; then
       should_log_script_name=false
-    elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -ge "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
+    elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -le "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
       should_log_script_name=true
     fi
 
