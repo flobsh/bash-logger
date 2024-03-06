@@ -33,6 +33,7 @@ _get_caller_script_name() {
 # $2: style (on of the styles available in styles.sh)
 # $3: content (string)
 _log() {
+  # Arguments
   local should_log_script_name="${1}"
   local -n style="${2}"
   local content="${3}"
@@ -58,7 +59,10 @@ _log() {
 # $1: log level (among LOG_LEVELS)
 # $2: content (string)
 _log_diagnostic() {
+  # Arguments
   local level="${LOG_LEVELS[${1}]}"
+  local content="${2}"
+
   if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
 
     local should_log_script_name
@@ -73,6 +77,7 @@ _log_diagnostic() {
 }
 
 _log_out() {
+  # Arguments
   local style="${1}"
   local content="${2}"
 
