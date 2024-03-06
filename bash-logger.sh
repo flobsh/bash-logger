@@ -38,15 +38,17 @@ _log() {
   local -n style="${2}"
   local content="${3}"
 
-  # Check if script name should be displayed.
+  # Local variables
   local script_name=""
+  local formatting=""
+  local format_reset=""
+
+  # Check if script name should be displayed.
   if [[ "${should_log_script_name}" = true ]]; then
     script_name="[$(_get_caller_script_name)] "
   fi
 
   # Check if formatting should be enabled
-  local formatting=""
-  local format_reset=""
   if [[ "${LOG_FORMATTING}" == ON ]]; then
     formatting="${style[format]}"
     format_reset="${RESET}"
@@ -63,9 +65,11 @@ _log_diagnostic() {
   local level="${LOG_LEVELS[${1}]}"
   local content="${2}"
 
+  # Local variables
+  local should_log_script_name
+
   if [[ "${level}" -ge "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
 
-    local should_log_script_name
     if [[ "${LOG_SCRIPT_NAME}" == "OFF" ]]; then
       should_log_script_name=false
     elif [[ "${LOG_SCRIPT_NAME}" == "ON" ]] || [[ "${level}" -ge "${LOG_LEVELS[${LOG_SCRIPT_NAME}]}" ]]; then
@@ -81,7 +85,9 @@ _log_out() {
   local style="${1}"
   local content="${2}"
 
+  # Local variables
   local should_log_script_name
+
   should_log_script_name="$([[ "${LOG_SCRIPT_NAME}" == "ON" ]] && echo true || echo false)"
 
   _log "${should_log_script_name}" "${style}" "${content}"
