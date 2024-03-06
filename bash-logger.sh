@@ -42,6 +42,10 @@ _log() {
   local formatting=""
   local format_reset=""
 
+  if [[ "${LOG_LEVELS[${style[log_level]:-ANY}]}" -gt "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
+    return 0
+  fi
+
   # Check if script name should be displayed.
   if [[ "${LOG_SCRIPT_NAME}" = true ]] && [[ "${style[script_name]}" = true ]]; then
     script_name="[$(_get_caller_script_name)] "
@@ -56,47 +60,26 @@ _log() {
   printf "%s%s%s%s%s\n" "${formatting}" "${script_name}" "${style[prefix]}" "${content}" "${format_reset}"
 }
 
-# Log a diagnostic message on stderr.
-# $1: log level (among LOG_LEVELS)
-# $2: content (string)
-_log_diagnostic() {
-  # Arguments
-  local level="${LOG_LEVELS[${1}]}"
-  local content="${2}"
-
-  if [[ "${level}" -le "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
-    _log "${1}" "${2}" >&2
-  fi
-}
-
-_log_out() {
-  # Arguments
-  local style="${1}"
-  local content="${2}"
-
-  _log "${style}" "${content}"
-}
-
 log() {
-  _log_out NORMAL "${1}"
+  _log NORMAL "${1}"
 }
 
 log_section() {
-  _log_out SECTION "${1}"
+  _log SECTION "${1}"
 }
 
 log_debug() {
-  _log_diagnostic DEBUG "${1}"
+  _log DEBUG "${1}"
 }
 
 log_info() {
-  _log_diagnostic INFO "${1}"
+  _log INFO "${1}"
 }
 
 log_warn() {
-  _log_diagnostic WARNING "${1}"
+  _log WARNING "${1}"
 }
 
 log_err() {
-  _log_diagnostic ERROR "${1}"
+  _log ERROR "${1}"
 }
