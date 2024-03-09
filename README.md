@@ -42,19 +42,42 @@ log_warning "x is not set"
 _log MY_STYLE "Hello with my style"
 ```
 
-## Style creation
+### Predefined styles
+
+This table shows the predefined styles you can use with the default configuration:
+
+| Style   | Function      | Format    | Prefix      | Show script name | Log level | Stream |
+| ------- | ------------- | --------- | --------    | ---------------- | --------- | ------ |
+| NORMAL  | `log`         | white     |             | false            | ANY       | stdout |
+| SECTION | `log_section` | blue,bold |             | false            | ANY       | stdout |
+| DEBUG   | `log_debug`   | black     | `debug:`    | true             | DEBUG     | stderr |
+| INFO    | `log_debug`   | white     | `info: `    | true             | INFO      | stderr |
+| WARNING | `log_warning` | yellow    | `warning: ` | true             | WARNING   | stderr |
+| ERROR   | `log_error`   | red       | `error: `   | true             | ERROR     | stderr |
+
+### Style creation
 
 To create your style, edit the `styles.conf` file and create a new associative array with your configuration:
 
 ```bash
 declare -r -A MY_STYLE=(
-  [prefix]="my_style: " # Prefix that will be added before 
-  [format]="${BOLD}${GREEN}" # Formatting options applied with this style, available in the formatting.conf file
-  [script_name]=false # Should messages log with this style display the caller script's name (true or false)
-  [log_level]=ANY # (optional) Messages will only be displayed if this level is enabled or above
-  [stream]=1 # (optional) Output stream on which the message will be displayed (1: standard output, 2: standard error)
+  [prefix]="my_style: " 
+  [format]="${BOLD}${GREEN}"
+  [script_name]=false 
+  [log_level]=ANY
+  [stream]=1
 )
 ```
+
+The following table describes the different keys available:
+
+| Key           | Type      | Description                                                                                                  |
+| ------------- | --------- | ------------------------------------------------------------------------------------------------------------ |
+| `prefix`      | String    | A prefix that will be displayed at the beginning of messages using this style                                |
+| `format`      | String    | Formatting and color applied to text using this style                                                        |
+| `script_name` | Boolean   | Should the caller script's name be displayed if the `LOG_SCRIPT_NAME` option is enabled                      |
+| `log_level`   | LOG_LEVEL | The message using this style will be shown only if the current `LOG_LEVEL` is equal or lower than this value |
+| `stream`      | Number    | On which output stream the message should be displayed (1: stdout, 2: stderr)                                |
 
 ## Roadmap
 
