@@ -55,7 +55,7 @@ _log() {
     script_name="[$(_get_caller_script_name)] "
   fi
 
-  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}"
+  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${style[stream]:-1}"
 }
 
 log() {
