@@ -21,6 +21,41 @@ The stylesheet is pre-configured with the following default styles:
 
 If you want to modify these styles or create your own, it is very easy to do so in the `styles.conf` file!
 
+## Usage
+
+1. Copy the `bash-logger.sh`, `formatting.conf` and `styles.conf` files to a directory in your project.
+These three files must be in the same directory for the default configuration to work, but you want to have a 
+different file structure, you can modify the `FORMATSHEET_PATH` and the `STYLESHEET_PATH` varables in `bash-logger.sh`.
+
+2. Source `bash-logger.sh` in your script:
+```bash
+. "$(dirname "${0}")"/path/to/bash-logger.sh
+```
+
+3. Use the predefined functions for one of the predefined styles or create your own:
+```bash
+# Use predefined styles
+log "Welcome to my script!"
+log_warning "x is not set"
+
+# Use your own style
+_log MY_STYLE "Hello with my style"
+```
+
+## Style creation
+
+To create your style, edit the `styles.conf` file and create a new associative array with your configuration:
+
+```bash
+declare -r -A MY_STYLE=(
+  [prefix]="my_style: " # Prefix that will be added before 
+  [format]="${BOLD}${GREEN}" # Formatting options applied with this style, available in the formatting.conf file
+  [script_name]=false # Should messages log with this style display the caller script's name (true or false)
+  [log_level]=ANY # (optional) Messages will only be displayed if this level is enabled or above
+  [stream]=1 # (optional) Output stream on which the message will be displayed (1: standard output, 2: standard error)
+)
+```
+
 ## Roadmap
 
 Here is a list of features I plan to implement:
