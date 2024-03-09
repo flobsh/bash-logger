@@ -10,16 +10,16 @@ It provides an easy-to-configure stylesheet to define various display styles whi
 
 The stylesheet is pre-configured with the following default styles:
 
-- `NORMAL`: default white text with no formatting
-- `SECTION`: blue bold text for the main sections of a script
-
+- Styles to display information or results
+  - `NORMAL`: default white text with no formatting
+  - `SECTION`: blue bold text for the main sections of a script
 - Styles for diagnostics or when something goes wrong (log on the standard error):
   - `DEBUG`: dark text with a `debug:` prefix
   - `INFO`: white text woth an `info:` prefix 
   - `WARNING`: yellow text with a `warning:` prefix
   - `ERROR`: red text with an `error:` prefix
 
-If you want to modify these styles or create your own, is very easy to do so in the `styles.conf` file!
+If you want to modify these styles or create your own, it is very easy to do so in the `styles.conf` file!
 
 ## Roadmap
 
