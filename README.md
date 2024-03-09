@@ -24,8 +24,8 @@ If you want to modify these styles or create your own, it is very easy to do so 
 ## Usage
 
 1. Copy the `bash-logger.sh`, `formatting.conf` and `styles.conf` files to a directory in your project.
-These three files must be in the same directory for the default configuration to work, but you want to have a 
-different file structure, you can modify the `FORMATSHEET_PATH` and the `STYLESHEET_PATH` varables in `bash-logger.sh`.
+These three files must be in the same directory for the default configuration to work, but if you want to have a 
+different file structure, you can modify the `FORMATSHEET_PATH` and the `STYLESHEET_PATH` variables in `bash-logger.sh`.
 
 2. Source `bash-logger.sh` in your script:
 ```bash
