@@ -19,8 +19,8 @@ log_info "And then back to $(basename "${0}") script"
 echo -e
 
 log_section "Formatting"
-log "${MAGENTA}Customize ${CYAN}colors ${GREEN}within ${YELLOW}log ${BLUE}functions.${RESET}"
-log "${BOLD}Or${RESET} ${ITALIC}even${RESET} ${DIM}use${RESET} ${BLINK}formatting${RESET} ${ULINE}options.${RESET}"
+log "${MAGENTA}Customize ${CYAN}colors ${GREEN}within ${YELLOW}log ${BLUE}functions.${FORMAT_RESET}"
+log "${BOLD}Or${FORMAT_RESET} ${ITALIC}even${FORMAT_RESET} ${DIM}use${FORMAT_RESET} ${BLINK}formatting${FORMAT_RESET} ${ULINE}options.${FORMAT_RESET}"
 echo -e
 
 log "Try running this script with LOG_LEVEL=DEBUG, LOG_FORMATTING=false or LOG_SCRIPT_NAME=true"
