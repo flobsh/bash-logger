@@ -1,0 +1,19 @@
+name: Shellcheck
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: action/checkout@v4
+    - name: Run Shellcheck
+      run: shellcheck -ax bash-logger.sh
+    
