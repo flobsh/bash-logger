@@ -37,8 +37,10 @@ LOG_FORMATTING=${LOG_FORMATTING:-true}
 
 # Source configuration files
 if [[ "${LOG_FORMATTING}" = true ]]; then
+  # shellcheck source=formatting.conf
   . "${FORMATSHEET_PATH}"
 fi
+# shellcheck source=styles.conf
 . "${STYLESHEET_PATH}"
 
 declare -r -A LOG_LEVELS=(
