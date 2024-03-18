@@ -58,10 +58,12 @@ _get_caller_script_name() {
 # Main log function.
 # $1: style (defined in styles.conf)
 # $2: content (string)
+# $3: output stream (number)
 _log() {
   # Arguments
   local -n style="${1}"
   local content="${2}"
+  local stream="${3:-1}"
 
   # Local variables
   local script_name=""
@@ -75,7 +77,22 @@ _log() {
     script_name="[$(_get_caller_script_name)] "
   fi
 
-  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${style[stream]:-1}"
+  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${stream}"
+}
+
+log_out() {
+  local -n style
+  local content
+
+  if [[ $# -eq 1 ]]; then
+    style=NORMAL
+    content="${1}"
+  elif [[ $# -eq 2 ]]; then
+    style="${1}"
+    content="${2}"
+  fi
+
+  _log "${style}" "${content}" 1
 }
 
 log() {
@@ -87,19 +104,19 @@ log_section() {
 }
 
 log_debug() {
-  _log DEBUG "${1}"
+  _log DEBUG "${1}" 2
 }
 
 log_info() {
-  _log INFO "${1}"
+  _log INFO "${1}" 2
 }
 
 log_warn() {
-  _log WARNING "${1}"
+  _log WARNING "${1}" 2
 }
 
 log_err() {
-  _log ERROR "${1}"
+  _log ERROR "${1}" 2
 }
 
 _check_dependencies
