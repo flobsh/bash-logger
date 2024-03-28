@@ -63,10 +63,13 @@ _log() {
   # Arguments
   local -n style="${1}"
   local content="${2}"
-  local stream="${3:-1}"
 
   # Local variables
   local script_name=""
+  local prefix="${style[prefix]}"
+  local format="${style[format]}"
+  local stream="${style[stream]:-1}"
+  local log_level="${style[log_level]:-ANY}"
 
   if [[ "${LOG_LEVELS[${style[log_level]:-ANY}]}" -gt "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
     return 0
@@ -77,22 +80,7 @@ _log() {
     script_name="[$(_get_caller_script_name)] "
   fi
 
-  printf "%s%s%s%s%s\n" "${style[format]}" "${script_name}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${stream}"
-}
-
-log_out() {
-  local -n style
-  local content
-
-  if [[ $# -eq 1 ]]; then
-    style=NORMAL
-    content="${1}"
-  elif [[ $# -eq 2 ]]; then
-    style="${1}"
-    content="${2}"
-  fi
-
-  _log "${style}" "${content}" 1
+  printf "%s%s%s%s%s\n" "${format}" "${script_name}" "${prefix}" "${content}" "${FORMAT_RESET}" >&"${stream}"
 }
 
 log() {
@@ -104,19 +92,19 @@ log_section() {
 }
 
 log_debug() {
-  _log DEBUG "${1}" 2
+  _log DEBUG "${1}"
 }
 
 log_info() {
-  _log INFO "${1}" 2
+  _log INFO "${1}"
 }
 
 log_warn() {
-  _log WARNING "${1}" 2
+  _log WARNING "${1}"
 }
 
 log_err() {
-  _log ERROR "${1}" 2
+  _log ERROR "${1}"
 }
 
 _check_dependencies
