@@ -36,10 +36,8 @@ _check_dependencies() {
 _check_dependencies
 
 # Source configuration files
-if [[ "${LOG_FORMATTING}" = true ]]; then
-  # shellcheck source=formatting.conf
-  . "${FORMATSHEET_PATH}"
-fi
+# shellcheck source=formatting.conf
+[[ "${LOG_FORMATTING}" = true ]] && . "${FORMATSHEET_PATH}"
 # shellcheck source=styles.conf
 . "${STYLESHEET_PATH}"
 
