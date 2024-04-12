@@ -104,5 +104,3 @@ log_warn() {
 log_err() {
   _log ERROR "${1}"
 }
-
-_check_dependencies
