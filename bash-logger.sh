@@ -24,11 +24,11 @@ STYLESHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/styles.conf"
 # Check dependencies presence
 _check_dependencies() {
   if [[ "${LOG_FORMATTING}" = true ]] && ! [[ -f "${FORMATSHEET_PATH}" ]]; then
-    printf "error: format sheet not found, expected path is %s" "${FORMATSHEET_PATH}" >&2
+    printf "error: format sheet not found, expected path is %s" "${FORMATSHEET_PATH}\n" >&2
     exit 1
   fi
   if ! [[ -f "${STYLESHEET_PATH}" ]]; then
-    printf "error: stylesheet not found, expected path is %s" "${STYLESHEET_PATH}" >&2
+    printf "error: stylesheet not found, expected path is %s" "${STYLESHEET_PATH}\n" >&2
     exit 1
   fi
 }
