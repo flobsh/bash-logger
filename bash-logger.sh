@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# GLOBAL OPTIONS
+# LOG_LEVEL sets the level of log the script will output.
+# The logger will display the messages for LOG_LEVEL and higher.
+# Values can be DEBUG, INFO, WARNING or ERROR (default INFO).
+LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+# LOG_SCRIPT_NAME enables display of the script issuing the log.
+# Values can be (default true):
+# - true: the logger will display the script's name if the style
+#         allows it with the [script-name]=true key.
+# - false: the logger will never display the script's name
+LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-false}
+
+# LOG_FORMATTING enables output colors and text formatting
+# Values can be true or false (default true)
+LOG_FORMATTING=${LOG_FORMATTING:-true}
+
 # DEPENDENCIES
 FORMATSHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/formatting.conf"
 STYLESHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/styles.conf"
@@ -17,23 +34,6 @@ _check_dependencies() {
 }
 
 _check_dependencies
-
-# GLOBAL OPTIONS
-# LOG_LEVEL sets the level of log the script will output.
-# The logger will display the messages for LOG_LEVEL and higher.
-# Values can be DEBUG, INFO, WARNING or ERROR (default INFO).
-LOG_LEVEL=${LOG_LEVEL:-INFO}
-
-# LOG_SCRIPT_NAME enables display of the script issuing the log.
-# Values can be (default true):
-# - true: the logger will display the script's name if the style
-#         allows it with the [script-name]=true key.
-# - false: the logger will never display the script's name
-LOG_SCRIPT_NAME=${LOG_SCRIPT_NAME:-false}
-
-# LOG_FORMATTING enables output colors and text formatting
-# Values can be true or false (default true)
-LOG_FORMATTING=${LOG_FORMATTING:-true}
 
 # Source configuration files
 if [[ "${LOG_FORMATTING}" = true ]]; then
