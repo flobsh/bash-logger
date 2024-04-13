@@ -20,6 +20,7 @@ LOG_FORMATTING=${LOG_FORMATTING:-true}
 # DEPENDENCIES
 FORMATSHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/formatting.conf"
 STYLESHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/styles.conf"
+SUBCOMMANDS_PATH="$(dirname "${BASH_SOURCE[0]}")/subcommands.conf"
 
 # Check dependencies presence
 _check_dependencies() {
@@ -31,6 +32,10 @@ _check_dependencies() {
     printf "error: stylesheet not found, expected path is %s" "${STYLESHEET_PATH}\n" >&2
     exit 1
   fi
+  if ! [[ -f "${SUBCOMMANDS_PATH}" ]]; then
+    printf "error: subcommands file not found, expected path is %s" "${SUBCOMMANDS_PATH}\n" >&2
+    exit 1
+  fi
 }
 
 _check_dependencies
@@ -40,6 +45,8 @@ _check_dependencies
 [[ "${LOG_FORMATTING}" = true ]] && . "${FORMATSHEET_PATH}"
 # shellcheck source=styles.conf
 . "${STYLESHEET_PATH}"
+# shellcheck source=subcommands.conf
+. "${SUBCOMMANDS_PATH}"
 
 declare -r -A LOG_LEVELS=(
   [ANY]=0
@@ -79,6 +86,15 @@ _log() {
   fi
 
   printf "%s%s%s%s%s\n" "${format}" "${script_name}" "${prefix}" "${content}" "${FORMAT_RESET}" >&"${stream}"
+}
+
+log_subcmd() {
+  local -n subcommand="${LOG_COMMANDS[${1}]}"
+  local content="${2}"
+
+  local -n style="${subcommand[style]}"
+
+  printf "%s%s%s%s\n" "${style[format]}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${subcommand[stream]}"
 }
 
 log() {
