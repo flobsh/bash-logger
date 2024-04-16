@@ -19,12 +19,12 @@ debug: debug"
 
 # shellcheck disable=SC2317
 test_log() {
-  log_section "section"
-  log "normal"
-  log_err "error"
-  log_warn "warning"
-  log_info "info"
-  log_debug "debug"
+  log_subcmd section "section"
+  log_subcmd normal "normal"
+  log_subcmd error "error"
+  log_subcmd warning "warning"
+  log_subcmd info "info"
+  log_subcmd debug "debug"
 }
 
 # Test LOG_LEVEL

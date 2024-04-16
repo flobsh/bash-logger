@@ -92,6 +92,11 @@ log_subcmd() {
   local -n subcommand="${LOG_COMMANDS[${1}]}"
   local content="${2}"
 
+  # Don't do anything if the current LOG_LEVEL is lower than the log_level of the subcommand
+  if [[ "${LOG_LEVELS[${subcommand[log_level]}]}" -gt "${LOG_LEVELS[${LOG_LEVEL}]}" ]]; then
+    return 0
+  fi
+
   local -n style="${subcommand[style]}"
 
   printf "%s%s%s%s\n" "${style[format]}" "${style[prefix]}" "${content}" "${FORMAT_RESET}" >&"${subcommand[stream]}"
