@@ -22,23 +22,29 @@ FORMATSHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/formatting.conf"
 STYLESHEET_PATH="$(dirname "${BASH_SOURCE[0]}")/styles.conf"
 SUBCOMMANDS_PATH="$(dirname "${BASH_SOURCE[0]}")/subcommands.conf"
 
-# Check dependencies presence
-_check_dependencies() {
-  if [[ "${LOG_FORMATTING}" = true ]] && ! [[ -f "${FORMATSHEET_PATH}" ]]; then
-    printf "error: format sheet not found, expected path is %s" "${FORMATSHEET_PATH}\n" >&2
-    exit 1
-  fi
-  if ! [[ -f "${STYLESHEET_PATH}" ]]; then
-    printf "error: stylesheet not found, expected path is %s" "${STYLESHEET_PATH}\n" >&2
-    exit 1
-  fi
-  if ! [[ -f "${SUBCOMMANDS_PATH}" ]]; then
-    printf "error: subcommands file not found, expected path is %s" "${SUBCOMMANDS_PATH}\n" >&2
+# Check the presence of a dependency
+#
+# usage:
+#   $0 <path> <description>
+#
+# args:
+#   $1 <path>: Path to the dependency.
+#   $2 <description>: Description of the dependency. If the dependency is not found,
+#                     this is used in the error message like this:
+#                     `error: <description> not found, expected path is <path>`.
+_check_dependency() {
+  local -r path="${1}"
+  local -r description="${2}"
+
+  if ! [[ -f "${path}" ]]; then
+    printf "error: ${description} not found, expected path is %s" "${path}\n" >&2
     exit 1
   fi
 }
 
-_check_dependencies
+[[ "${LOG_FORMATTING}" = true ]] && _check_dependency "${FORMATSHEET_PATH}" "format sheet"
+_check_dependency "${STYLESHEET_PATH}" "stylesheet"
+_check_dependency "${SUBCOMMANDS_PATH}" "subommands"
 
 # Source configuration files
 # shellcheck source=formatting.conf
@@ -56,10 +62,16 @@ declare -r -A LOG_LEVELS=(
   [DEBUG]=4
 )
 
-_get_caller_script_name() {
-  basename "${BASH_SOURCE[-1]}"
-}
-
+# Main log function
+# Print a message on stdout or stderr, with a pre-defined style
+#
+# usage:
+#   log <subcommand> <content>
+#
+# args:
+#   $1 <subcommand>: Defines behavior of the log function (style, log level and output stream).
+#                    See subcommands.conf.
+#   $2 <content>:    Content to print.
 log() {
   local -n subcommand="${LOG_COMMANDS[${1}]}"
   local content="${2}"
