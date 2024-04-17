@@ -20,14 +20,14 @@ different file structure, you can modify the `FORMATSHEET_PATH`, `STYLESHEET_PAT
 . "$(dirname "${0}")"/path/to/bash-logger.sh
 ```
 
-3. Use the predefined subcommands with the associated styles or create your own:
+3. Use the predefined subcommands with their associated styles or create your own:
 ```bash
 # Use predefined subcommands
 log section "Welcome to my script!"
 log warning "x is not set"
 
 # Use your own subcommand
-log my-style "Hello with my style"
+log my-subcommand "Hello with my subcommand"
 ```
 
 ## Quick reference
@@ -36,9 +36,9 @@ To display messages using **bash-logger**, use the `log <subcommand> <content>` 
 
 ### Subcommands
 
-Subcommands are pre-configured sets of options that tell the `log` command how and when to render the content. They are defined in `subcommands.conf` and can be customized by the developer.
+Subcommands are pre-configured sets of options that tell the `log` command how and when to render the content. They are defined in `subcommands.conf` in the form of associative arrays and can be customized by the developer.
 
-Subcommands define this set of options in Bash associative array:
+Keys available for subcommands:
 - `[style]`: which style to use whith this subcommand. Styles are defined in `styles.conf`
 - `[stream]`: on which output stream to display the content. 1 for stdout, 2 for stderr.
 - `[log_level]`: only display the content if the global `LOG_LEVEL` variable is lower than this value. Can be `DEBUG`, `INFO`, `WARNING`, `ERROR` or `ANY`.
@@ -46,13 +46,13 @@ Subcommands define this set of options in Bash associative array:
 For example:
 ```bash
 declare -r -A LOG_CMD_MY_SUBCOMMAND=(
-  [style]=MY_STYLE
+  [style]=LOG_STYLE_MY_STYLE
   [stream]=1
   [log_level]=INFO
 )
 ```
 
-Then, associate your subcommand associative array with an easy-to-remember alias in the `LOG_COMMANDS` array:
+Then, associate your subcommand's associative array with an easy-to-remember alias in the `LOG_COMMANDS` array:
 ```bash
 declare -r -x -A LOG_COMMANDS=(
   # ... other subcommands
@@ -63,7 +63,7 @@ declare -r -x -A LOG_COMMANDS=(
 This redirection is done because associative arrays are exported into the user's scripts, so we want them to have uncommon names in order not to collide with user-defined variables. The redirection allows us to refer to this complicated-named array with an easy-to-remember alias.
 
 > [!NOTE]
-> We recommend the use of `LOG_CMD_` prefix for your subcommands associative array names.
+> We recommend the use of `LOG_CMD_` prefix for your subcommands' associative array names.
 
 ### Styles
 
@@ -73,11 +73,14 @@ Styles define how the text is rendered using terminal-compatible colors and form
 
 For example:
 ```bash
-declare -r -A OK_STYLE=(
+declare -r -A LOG_STYLE_OK=(
   [format]="${GREEN}${BOLD}"
   [prefix]="ok: "
 )
 ```
+
+> [!NOTE]
+> We recommend the use of the `LOG_STYLE_` prefix for style names.
 
 ## Roadmap
 
