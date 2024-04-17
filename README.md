@@ -34,6 +34,8 @@ log my-style "Hello with my style"
 
 To display messages using **bash-logger**, use the `log <subcommand> <content>` command.
 
+### Subcommands
+
 Subcommands are pre-configured sets of options that tell the `log` command how and when to render the content. They are defined in `subcommands.conf` and can be customized by the developer.
 
 Subcommands define this set of options in Bash associative array:
@@ -62,6 +64,8 @@ This redirection is done because associative arrays are exported into the user's
 
 > [!NOTE]
 > We recommend the use of `LOG_CMD_` prefix for your subcommands associative array names.
+
+### Styles
 
 Styles define how the text is rendered using terminal-compatible colors and formatting options. They are defined in `styles.conf` as Bash associative arrays with the following keys:
 - `[format]`: terminal-compatible escape sequences to define colors and formatting. The `formatting.conf` file provides easy-to-use variables to define your own format.
