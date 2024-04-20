@@ -32,44 +32,40 @@ test_log() {
 # shellcheck disable=SC2317
 test_log_level() {
   local log_level="${1}"
+  LOG_LEVEL="${log_level}"
+
+  test_log > actual 2>&1
   case "${log_level}" in
     DEBUG)
-      LOG_LEVEL=DEBUG
-      test "$(test_log 2>&1)" == "${EXPECTED_OUTPUT}"
+      echo "${EXPECTED_OUTPUT}" > expected
       ;;
     INFO)
-      LOG_LEVEL=INFO
-      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 5)"
+      echo "${EXPECTED_OUTPUT}" | head -n 5 > expected
       ;;
     WARNING)
-      LOG_LEVEL=WARNING
-      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 4)"
+      echo "${EXPECTED_OUTPUT}" | head -n 4 > expected
       ;;
     ERROR)
-      LOG_LEVEL=ERROR
-      test "$(test_log 2>&1)" == "$(echo "${EXPECTED_OUTPUT}" | head -n 3)"
-      ;;
-    *)
-      printf "unknown log level" >&2
-      return 1
+      echo "${EXPECTED_OUTPUT}" | head -n 3 > expected
       ;;
   esac
+  test_cmp expected actual
 }
 
-test_expect_success 'Debug' "
+test_expect_success 'Debug' '
   test_log_level DEBUG
-"
+'
 
-test_expect_success 'Info' "
+test_expect_success 'Info' '
   test_log_level INFO
-"
+'
 
-test_expect_success 'Warning' "
+test_expect_success 'Warning' '
   test_log_level WARNING
-"
+'
 
-test_expect_success 'Error' "
+test_expect_success 'Error' '
   test_log_level ERROR
-"
+'
 
 test_done
