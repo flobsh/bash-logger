@@ -1,6 +1,7 @@
 # bash-logger
 
 [![Shellcheck](https://github.com/flobsh/bash-logger/actions/workflows/shellcheck.yml/badge.svg?branch=main)](https://github.com/flobsh/bash-logger/actions/workflows/shellcheck.yml)
+[![Tests](https://github.com/flobsh/bash-logger/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/flobsh/bash-logger/actions/workflows/tests.yml)
 
 **Simple and configurable logger library for Bash scripts**
 
