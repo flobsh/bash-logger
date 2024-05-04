@@ -2,13 +2,12 @@
 
 test_description='Test that log levels are correclty outputed'
 
-. "$(dirname "${BASH_SOURCE[0]}")"/../bash-logger.sh
-. "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
-
 # Set global options to run test:
 LOG_LEVEL=DEBUG
-LOG_SCRIPT_NAME=OFF
-LOG_FORMATTING=ON
+LOG_FORMATTING=true
+
+. "$(dirname "${BASH_SOURCE[0]}")"/../bash-logger.sh
+. "$(dirname "${BASH_SOURCE[0]}")"/sharness/sharness.sh
 
 EXPECTED_OUTPUT="\
 \e[37mnormal\e(B\e[m
